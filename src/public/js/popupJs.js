@@ -38,19 +38,20 @@ function abc(id) {
 
 function popupDisplay(item)
 {
-    
-    var popupDisplay = ` <dl class="row fw-bolder pl-3 d-flex text-wrap">`;
+    var v_data = `<dl class="row fw-bolder pl-3 d-flex text-wrap">`;
     variationData = item['variationData'];
     console.log(variationData.length);
+    
     // for(i=0;i<variationData.length;i++)
     // {
-    //     popupDisplay +=`<dt class="col-sm-3">${variationData[0]}</dt>
-    //     <dd class="col-sm-9">${}</dd>`;
-    // }
-    metaData = item['metaData'];
-    key = Object.keys(item['metaData']);
-    values =Object.values(item['metaData']);
-    console.log(values.length);
+        //     popupDisplay +=`<dt class="col-sm-3">${variationData[0]}</dt>
+        //     <dd class="col-sm-9">${}</dd>`;
+        // }
+        metaData = item['metaData'];
+        key = Object.keys(item['metaData']);
+        values =Object.values(item['metaData']);
+        console.log(values.length);
+        var popupDisplay = ` <dl class="row fw-bolder pl-3 d-flex text-wrap">`;
     for(i=0;i<values.length;i++)
     {
         popupDisplay +=`<dt class="col-sm-3">${key[i]}</dt>

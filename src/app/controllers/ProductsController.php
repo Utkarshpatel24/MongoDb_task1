@@ -15,32 +15,34 @@ class ProductsController extends Controller
     {
         $postdata = $this->request->getPost();
         if (count($postdata) > 0) {
-            
+            echo "<pre>";
+            print_r($postdata);
+            // die;
             $data = array();
             $data=array_merge($data, ["name"=>$postdata['p_name']]);
             $data=array_merge($data, ["category"=>$postdata['p_category']]);
             $data=array_merge($data, ["price"=>$postdata['p_price']]);
             $data=array_merge($data, ["stock"=>$postdata['p_stock']]);
             $metaData = array();
-            for ($i=1;$i<=$postdata['metaCount'];$i++) {
+            for ($i=0;$i<=$postdata['metaCount'];$i++) {
                 $pair = [$postdata["l_name".$i]=>$postdata["l_value".$i]];
                 $metaData = array_merge($metaData, $pair);
             }
-          
+            $data = array_merge($data, ["metaData"=>$metaData]);
+            print_r($data);
+            // die;
             $variationData = array();
-            for ($i=1;$i<=$postdata['variationCount'];$i++) {
-                if (array_key_exists($postdata['a_name'.$i], $variationData)) {
-                    $pair = [$postdata['a_value'.$i]=>$postdata['a_price'.$i]];
-                    $variationData[$postdata['a_name'.$i]] = array_merge($variationData[$postdata['a_name'.$i]], $pair);
-                    
-                } else {
-
-                    $pair = [$postdata['a_name'.$i]=>[$postdata['a_value'.$i]=>$postdata['a_price'.$i]]];
-                    $variationData = array_merge($variationData, $pair);
+            for ($i=0;$i<=$postdata['variationCount'];$i++) {
+                $v= array();
+                for ($j=1;$j<=$postdata['variation-f-count-'.$i];$j++) {
+                    $v =array_merge($v, [$postdata['a_name-'.$i.'-'.$j]=>$postdata['a_value-'.$i.'-'.$j]]);
                 }
+                $variationData = array_merge($variationData, ['variation-'.$i => $v]);
+                $variationData = array_merge($variationData, ['price-'.$i => $postdata['a_price-'.$i]]);                
                
             }
-            $data = array_merge($data, ["metaData"=>$metaData]);
+            print_r($variationData);
+            // die;
             $data = array_merge($data, ["variationData"=>$variationData]);
             $product = new Products();
             $product->insert($data);
